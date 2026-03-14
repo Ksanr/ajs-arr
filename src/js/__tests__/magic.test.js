@@ -20,46 +20,27 @@ describe('Magician', () => {
     expect(magician.attack).toBe(150);
   });
 
-  test('чистая атака на дистанцию 1', () => {
-    expect(magician.attack).toBe(100);
+  // Параметризованные тесты для чистой атаки на разные расстояния
+  test.each([
+    [1, 100],
+    [2, 90],
+    [3, 80],
+    [4, 70],
+    [5, 60],
+  ])('чистая атака на дистанцию %i', (distance, expected) => {
+    magician.distance = distance;
+    expect(magician.attack).toBe(expected);
   });
 
-  test('чистая атака на дистанцию 2', () => {
-    magician.distance = 2;
-    expect(magician.attack).toBe(90);
-  });
-
-  test('чистая атака на дистанцию 3', () => {
-    magician.distance = 3;
-    expect(magician.attack).toBe(80);
-  });
-
-  test('чистая атака на дистанцию 4', () => {
-    magician.distance = 4;
-    expect(magician.attack).toBe(70);
-  });
-
-  test('чистая атака на дистанцию 5', () => {
-    magician.distance = 5;
-    expect(magician.attack).toBe(60);
-  });
-
-  test('атака "под туманом" на дистанцию 2', () => {
+  // Параметризованные тесты для атаки "под туманом"
+  test.each([
+    [2, 85],
+    [3, 72.075],
+    [4, 60],
+  ])('атака "под туманом" на дистанцию %i', (distance, expected) => {
     magician.stoned = true;
-    magician.distance = 2;
-    expect(magician.attack).toBeCloseTo(85);
-  });
-
-  test('атака "под туманом" на дистанцию 3', () => {
-    magician.stoned = true;
-    magician.distance = 3;
-    expect(magician.attack).toBeCloseTo(72.075);
-  });
-
-  test('атака "под туманом" на дистанцию 4', () => {
-    magician.stoned = true;
-    magician.distance = 4;
-    expect(magician.attack).toBe(60);
+    magician.distance = distance;
+    expect(magician.attack).toBeCloseTo(expected, 2);
   });
 
   test('линейное уменьшение даёт отрицательное значение (без дурмана)', () => {
@@ -94,9 +75,14 @@ describe('Daemon', () => {
     expect(daemon.attack).toBe(200);
   });
 
-  test('атака "под туманом" на дистанцию 2', () => {
+  // Параметризованный тест для демона
+  test.each([
+    [2, 85],
+    [3, 72.075],
+    [4, 60],
+  ])('атака "под туманом" на дистанцию %i', (distance, expected) => {
     daemon.stoned = true;
-    daemon.distance = 2;
-    expect(daemon.attack).toBeCloseTo(85);
+    daemon.distance = distance;
+    expect(daemon.attack).toBeCloseTo(expected, 2);
   });
 });

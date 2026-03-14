@@ -1,4 +1,4 @@
-# Team Set
+# Magic Attack
 
 ![CI](https://github.com/ksanr/ajs-arr/actions/workflows/ci.yml/badge.svg)
 
